@@ -1,0 +1,91 @@
+------------
+------------
+-- Functions 
+------------
+------------
+local playBtn
+
+-- 'onRelease' event listener for playBtn
+local function onPlayBtnRelease()
+	if 	connectionStatus == "connected" then
+		local value = "I am about to play twitter blast"
+		TwitterManager.tweet(callback, value)
+	end
+	-- go to level1.lua scene
+	storyboard.gotoScene( "maingame", "fade", 500 )
+	
+	return true	-- indicates successful touch
+end
+local function onTwitBtnRelease()	
+	-- go to level1.lua scene
+	storyboard.gotoScene( "smLinkup", "fade", 500 )
+	
+	return true	-- indicates successful touch
+end
+
+
+------------
+------------
+-- For create scene 
+------------
+------------
+
+playBtn = widget.newButton{
+	label="Play Now",
+	labelColor = { default={0}, over={0} },
+	default="media/btbg.png",
+	over="media/btbg.png",
+	font = native.systemFontBold,
+	fontSize = 40,
+	width=340, height=82,
+	onRelease = onPlayBtnRelease
+}
+playBtn:setReferencePoint( display.CenterReferencePoint )
+playBtn.x, playBtn.y = halfW, 300
+
+
+-- all display objects must be inserted into group
+group:insert( playBtn )
+
+------------
+------------
+-- For enter scene 
+------------
+------------
+-- Check twitter and facebook
+print(connectionStatus)
+
+
+currentScene = storyboard.getCurrentSceneName()
+if 	connectionStatus ~= "connected" then
+	-- connect Twitter
+	twitBtn = widget.newButton{
+		label="Connect SM",
+		labelColor = { default={0}, over={0} },
+		default="media/btbg.png",
+		over="media/btbg.png",
+		font = native.systemFontBold,
+		fontSize = 40,
+		width=340, height=82,
+		onRelease = onTwitBtnRelease
+	}
+	twitBtn:setReferencePoint( display.CenterReferencePoint )
+	twitBtn.x, twitBtn.y = halfW, 600
+
+	group:insert( twitBtn )
+end
+
+------------
+------------
+-- For Destroy scene 
+------------
+------------
+
+if playBtn then
+	playBtn:removeSelf()	-- widgets must be manually removed
+	playBtn = nil
+end
+if twitBtn then
+	twitBtn:removeSelf()	-- widgets must be manually removed
+	twitBtn = nil
+end

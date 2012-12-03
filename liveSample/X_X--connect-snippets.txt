@@ -1,0 +1,35 @@
+------------
+------------
+-- Functions 
+------------
+------------
+
+-- Tweet the message
+local function tweetit( event )
+	local value = "My app is connected to twitter" 
+	TwitterManager.tweet(callback, value)
+end
+
+
+------------
+------------
+-- Create Scene 
+------------
+------------
+
+twitterButton = widget.newButton {
+	id = "button1",
+	default="media/btbg.png",
+	over="media/btbg.png",
+	label = "Connect Twitter",
+	left = 380,
+	top = 300,
+	width=340, height=82,
+	fontSize = 40,
+	onRelease = tweetit
+}
+
+twitterButton.x = display.contentWidth / 2
+twitterButton.y = display.contentHeight - display.contentHeight / 3
+
+group:insert( twitterButton)
